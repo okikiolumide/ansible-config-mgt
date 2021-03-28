@@ -1,18 +1,18 @@
 
 
+
+
 [nfs]
-3.140.236.38
+3.140.236.38 ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=C:\Users\OLUMIDE\Downloads\bastion-key.pem
 
 [webservers]
-3.22.61.148
-18.223.158.25
-3.142.194.212
+18.218.174.170 ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=C:\Users\OLUMIDE\Downloads\bastion-key.pem
+18.216.222.8 ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=C:\Users\OLUMIDE\Downloads\bastion-key.pem
+13.59.99.43 ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=C:\Users\OLUMIDE\Downloads\bastion-key.pem
 
 [db]
-3.142.124.17
+13.58.84.33 ansible_ssh_user='ubuntu' ansible_ssh_private_key_file=C:\Users\OLUMIDE\Downloads\bastion-key.pem
 
-[jenkins]
-52.15.206.46
 
 [lb]
-18.223.71.39
+18.223.71.39 ansible_ssh_user='ubuntu' ansible_ssh_private_key_file=C:\Users\OLUMIDE\Downloads\bastion-key.pem
