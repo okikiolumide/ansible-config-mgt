@@ -21,3 +21,22 @@
       apt:
         name: wireshark
         state: latest
+
+  - name: update web servers
+      hosts: webservers
+      remote_user: root
+      tasks:
+      - name: ensure apache is at the latest version
+        yum:
+          name: httpd
+          state: latest
+
+  - name: Creates /var/www directory on webservers
+      hosts: webserver
+      file:
+      path: /var/www
+      state: directory
+      touch: test
+    
+
+
