@@ -34,7 +34,7 @@
           state: latest
 
   - name: Creates /var/www directory on webservers
-      hosts: webserver
+    hosts: webserver
       file:
       path: /var/www
       state: directory
