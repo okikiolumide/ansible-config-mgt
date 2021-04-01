@@ -22,12 +22,12 @@
         name: wireshark
         state: latest
 
- - name: update web servers
-      hosts: webserver
-      remote_user: ec2-user
-      become: yes
-      become_user: root
-      tasks:
+  - name: update web servers
+    hosts: webserver
+    remote_user: ec2-user
+    become: yes
+    become_user: root
+    tasks:
       - name: ensure apache is at the latest version
         yum:
           name: httpd
