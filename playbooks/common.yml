@@ -35,11 +35,15 @@
 
   - name: Creates /var/www directory on webservers
     hosts: webserver
-      path: /var/www
-      state: directory
-      touch: test
+    become: yes
+    become_user: root
+    tasks:
+      - name: Creating an empty file
+        file:
+          path: "/var/www/test"
+          state: touch
 
   
-    
+  
 
 
