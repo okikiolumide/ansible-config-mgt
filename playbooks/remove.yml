@@ -5,7 +5,7 @@
     become: yes
     become_user: root
     tasks:
-    - name: ensure wireshark is at the latest version
+    - name: ensure wireshark package is removed
       yum:
         name: wireshark
         state: absent
@@ -16,7 +16,7 @@
     become: yes
     become_user: root
     tasks:
-    - name: ensure wireshark is at the latest version
+    - name: ensure wireshark package is removed
       apt:
         name: wireshark
         state: absent
