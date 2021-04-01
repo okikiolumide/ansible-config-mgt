@@ -35,7 +35,6 @@
 
   - name: Creates /var/www directory on webservers
     hosts: webserver
-      file:
       path: /var/www
       state: directory
       touch: test
