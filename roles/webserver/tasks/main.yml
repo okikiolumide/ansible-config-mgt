@@ -1,0 +1,25 @@
+---
+# tasks file for webserver
+    tasks:
+      - name: ensure apache is at the latest version
+        yum:
+          name: httpd
+          state: latest
+          update-cache: yes
+          
+
+
+  - name: Creates /var/www directory on webservers
+    hosts: webserver
+    become: yes
+    become_user: root
+    tasks:
+      - name: Creating an empty file
+        file:
+          path: "/var/www/html"
+          state: directory
+
+  - name: Copy Tooling repo to webservers
+    src: /ubuntu/tooling/html
+    dest: /var/www
+    mode: 0777
