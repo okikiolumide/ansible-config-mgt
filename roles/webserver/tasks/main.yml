@@ -1,25 +1,37 @@
 ---
 # tasks file for webserver
-    tasks:
-      - name: ensure apache is at the latest version
-        yum:
-          name: httpd
-          state: latest
-          update-cache: yes
-          
+   
+- name: install apache
+  become: true
+  ansible.builtin.yum:
+    name: "httpd"
+    state: present
 
+- name: install git
+  become: true
+  ansible.builtin.yum:
+    name: "git"
+    state: present
 
-  - name: Creates /var/www directory on webservers
-    hosts: webserver
-    become: yes
-    become_user: root
-    tasks:
-      - name: Creating an empty file
-        file:
-          path: "/var/www/html"
-          state: directory
+- name: clone a repo
+  become: true
+  ansible.builtin.git:
+    repo: https://github.com/okikiolumide/tooling.git
+    dest: /var/www/html
+    force: yes
 
-  - name: Copy Tooling repo to webservers
-    src: /ubuntu/tooling/html
-    dest: /var/www
-    mode: 0777
+- name: copy html content to one level up
+  become: true
+  command: cp -r /var/www/html/html/ /var/www/
+
+- name: Start service httpd, if not started
+  become: true
+  ansible.builtin.service:
+    name: httpd
+    state: started
+
+- name: recursively remove /var/www/html/html/ directory
+  become: true
+  ansible.builtin.file:
+    path: /var/www/html/html
+    state: absent
