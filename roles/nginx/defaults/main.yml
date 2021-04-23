@@ -1,6 +1,8 @@
 #update Variable
-enable_nginx_lb: true
-load_balancer_is_required: true
+include_vars: ../env-vars/uat.yml
+
+enable_nginx_lb: { enable_nginx_lb }
+load_balancer_is_required: { load_balancer_is_required_2 }
 
 
 # Used only for Debian/Ubuntu installation, as the -t option for apt.
