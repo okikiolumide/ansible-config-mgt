@@ -1,19 +1,23 @@
 pipeline {
     agent any
+    environment {
+  workspace = "feature/jenkinspipeline-dev"
+  role_path = "var/lib/jenkins/workspace/"${workspace}"+"/roles""
+}
 
   stages {
-    stage('Build') {
+    stage('Clone Git Repo') {
       steps {
         script {
-          sh 'echo "Building Stage"'
+          git branch: 'feature/jenkinspipeline-dev', url: 'https://github.com/okikiolumide/ansible-config-mgt.git'
         }
       }
     }
 
-    stage('Test') {
+    stage('Update Ansible role path') {
       steps {
         script {
-          sh 'echo "Testing Stage"'
+          sh sh ('sudo sed -i -e "/roles_path = \\/[a-z]*\\/*/a\\roles_path = $cpath" -e "/roles_path = \\/[a-z]*\\/*/d" /etc/ansible/ansible.cfg')
         }
       }
     }
