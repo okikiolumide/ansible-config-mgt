@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
   workspace = "_mgt_feature/jenkinspipeline-dev"
-  role_path = "var/lib/jenkins/workspace/"${workspace}"+"/roles""
+  role_path = "var/lib/jenkins/workspace/'${workspace}'+'/roles'"
 }
 
   stages {
