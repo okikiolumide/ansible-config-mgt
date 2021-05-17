@@ -17,9 +17,17 @@ pipeline {
     stage('Update Ansible role path') {
       steps {
         script {
-          sh sh ('sudo sed -i -e "/roles_path = \\/[a-z]*\\/*/a\\roles_path = $role_path" -e "/roles_path = \\/[a-z]*\\/*/d" /etc/ansible/ansible.cfg')
+           sh ('sudo sed -i -e "/roles_path = \\/[a-z]*\\/*/a\\roles_path = $role_path" -e "/roles_path = \\/[a-z]*\\/*/d" /etc/ansible/ansible.cfg')
         }
       }
     }
+    
+    stage('Run Ansible Playbook') {
+      steps {
+       ansiblePlaybook credentialsId: 'awsprivate_key', installation: 'ansible', inventory: 'inventory/uat', playbook: 'playbooks/site.yml'
+      }
+    }
+    
+    
     }
 }
