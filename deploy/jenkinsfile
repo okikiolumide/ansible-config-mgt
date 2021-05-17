@@ -24,7 +24,7 @@ pipeline {
     
     stage('Run Ansible Playbook') {
       steps {
-       ansiblePlaybook credentialsId: 'awsprivate_key', installation: 'ansible', inventory: 'inventory/uat', playbook: 'playbooks/site.yml'
+       ansiblePlaybook credentialsId: 'awsprivate_key', installation: 'ansible', inventory: 'inventory/uat.yml', playbook: 'playbooks/site.yml'
       }
     }
     
