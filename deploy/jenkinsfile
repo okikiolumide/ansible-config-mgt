@@ -3,7 +3,7 @@ pipeline {
   
   parameters {
       string(name: 'inventory', defaultValue: 'uat.yml',  description: 'This is the inventory file for the environment to deploy configuration')
-      string(name: 'tag', defaultValue: 'webserver',  description: 'Ansible tag to run against playbook')
+      string(name: 'tags', defaultValue: 'webserver',  description: 'Ansible tag to run against playbook')
     }
   
   stages {
@@ -27,7 +27,7 @@ pipeline {
 
     stage('Run Ansible Playbook') {
       steps {
-        ansiblePlaybook(credentialsId: 'awsprivate_key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml', tags: '${tag}')
+        ansiblePlaybook(credentialsId: 'awsprivate_key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml', tags: '${tags}')
       }
     }
 
