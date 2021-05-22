@@ -1,0 +1,7 @@
+---
+ - hosts: artifactory
+   become: yes
+   roles:
+      - roles/artifactory
+   tags:
+      - artifactory

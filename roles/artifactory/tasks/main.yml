@@ -1,0 +1,39 @@
+---
+# tasks file for Artifactory
+
+  - name: Install Gnugp2 package
+    become: yes
+    apt:
+      name: gnupg2
+      state: present
+      update_cache: yes
+
+  - name: Download and add GPG key
+    become: yes
+    ansible.builtin.apt_key:
+      url: https://api.bintray.com/orgs/jfrog/keys/gpg/public.key
+      state: present
+
+  - name: Add Jfrog Artifactory Repository
+    become: yes
+    ansible.builtin.lineinfile:
+      path: "/etc/apt/sources.list.d/jfrog.list"
+      line: "deb https://jfrog.bintray.com/artifactory-debs bionic main"
+      create: yes
+      state: present
+
+  - name: Update and Install Jfrog-Artifactory-oss
+    become: yes
+    ansible.builtin.apt:
+      name: jfrog-artifactory-oss
+      state: present
+      update_cache: yes
+    notify:
+    - Restart Artifactory
+
+  - name: Ensure Artifactory is running 
+    become: yes
+    ansible.builtin.service:
+      name: artifactory
+      state: started
+      enabled: yes
