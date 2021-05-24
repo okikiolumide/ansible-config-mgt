@@ -1,0 +1,13 @@
+---
+# tasks file for php
+- name: Install php dependencies
+  become: yes
+  ansible.builtin.apt:
+    name: {{items}}
+    state: present
+    update_cache: yes
+  with_items:
+      - zip
+      - libapache2-mod-php
+      - phploc
+      - php-{xml,bcmath,bz2,intl,gd,mbstring,mysql,zip}
