@@ -1,21 +1,45 @@
 pipeline {
-    agent any
-
+  agent any
+  
+  parameters {
+      string(name: 'inventory', defaultValue: 'uat.yml',  description: 'This is the inventory file for the environment to deploy configuration')
+      string(name: 'tags', defaultValue: 'webserver',  description: 'Ansible tag to run against playbook')
+    }
+  
   stages {
-    stage('Build') {
+    stage('Clone Git Repo') {
       steps {
         script {
-          sh 'echo "Building Stage"'
+          git branch: 'feature/jenkinspipeline-dev', url: 'https://github.com/okikiolumide/ansible-config-mgt.git'
         }
+
       }
     }
 
-    stage('Test') {
+    stage('Update Ansible role path') {
       steps {
         script {
-          sh 'echo "Testing Stage"'
+          sh ('sudo sed -i -e "/roles_path = \\/[a-z]*\\/*/a\\roles_path = $role_path" -e "/roles_path = \\/[a-z]*\\/*/d" /etc/ansible/ansible.cfg')
         }
+
       }
     }
+
+    stage('Run Ansible Playbook') {
+      steps {
+        ansiblePlaybook(credentialsId: 'awsprivate_key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml', tags: '${tags}')
+      }
     }
+
+    stage('Clean up') {
+      steps {
+        cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
+      }
+    }
+
+  }
+  environment {
+    workspace = '_mgt_feature/jenkinspipeline-dev'
+    role_path = "var/lib/jenkins/workspace/'${workspace}'+'/roles'"
+  }
 }

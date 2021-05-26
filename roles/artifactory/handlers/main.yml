@@ -1,0 +1,6 @@
+---
+# handlers file for Artifactory
+      - name: Restart Artifactory 
+        ansible.builtin.service:
+            name: artifactory
+            state: restarted

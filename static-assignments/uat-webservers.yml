@@ -1,5 +1,8 @@
 ---
   - hosts: uat-webservers
+    become: yes
     roles:
+      - roles/webserver
+    tags: 
       - webserver
    
