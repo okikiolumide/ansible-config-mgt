@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+    - php
+  tags:
+    - php
+  
